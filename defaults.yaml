@@ -1,0 +1,9 @@
+---
+name: default
+cpus: 1
+memory: 512
+box: ubuntu/trusty64
+sync: []
+ip: 192.168.56.2
+web-root: /var/project/html
+role: ""

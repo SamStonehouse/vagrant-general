@@ -1,0 +1,11 @@
+---
+  - name: box-1
+    role: web-server
+    box: ubuntu/trusty64
+    cpus: 2
+    memory: 1024
+    ip: 192.168.56.4
+    web-root: "/var/web-project/build"
+    sync:
+      - source: '../basics/'
+        target: '/var/web-project'
