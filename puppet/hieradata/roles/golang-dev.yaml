@@ -1,0 +1,4 @@
+---
+classes:
+  - golang
+golang::workspace: /var/server
