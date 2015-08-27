@@ -7,5 +7,5 @@
     ip: 192.168.56.4
     web-root: "/var/web-project/build"
     sync:
-      - source: '../basics/'
+      - source: '../react-es6-watchify/'
         target: '/var/web-project'
