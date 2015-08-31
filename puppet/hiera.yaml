@@ -4,5 +4,6 @@
 :yaml:
   :datadir: /vagrant/puppet/hieradata
 :hierarchy:
+  - "roles/%{role_alt}"
   - "roles/%{role}"
   - common

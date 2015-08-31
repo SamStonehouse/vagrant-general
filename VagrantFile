@@ -8,7 +8,8 @@
      
     machines = YAML.load_file('vagrant.yaml')
     default_config = YAML.load_file('defaults.yaml')
-     
+    
+    $syncCount = 0
 
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       machines.each do |machine|
@@ -21,8 +22,9 @@
           facts = {}
 
           facts['role'] = machine_config['role']
+	  facts['role_alt'] = machine_config['role-alt']
           facts['web_root'] = machine_config['web-root']
-
+          facts['golang_working_dir'] = machine_config['golang-working-dir']
           puts "Facts: " + facts.inspect
 
           #Syncronise directories
@@ -69,12 +71,15 @@
     def sync_folder(mach, source, target)
       mach.vm.synced_folder source, target
 
+      syncName = "sync" + $syncCount.to_s
+      $syncCount += 1
+
       mach.vm.provider "virtualbox" do |v, override|
         override.vm.synced_folder source, target, disabled: true
 
-        v.customize ["sharedfolder", "add", :id, "--name", "synced", "--hostpath", (("//?/" + File.absolute_path(source)).gsub("/","\\"))]
+        v.customize ["sharedfolder", "add", :id, "--name", syncName, "--hostpath", (("//?/" + File.absolute_path(source)).gsub("/","\\"))]
 
         override.vm.provision :shell, inline: "mkdir " + target
-        override.vm.provision :shell, inline: "mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` synced " + target, run: "always"
+        override.vm.provision :shell, inline: "mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` " + syncName + " " + target, run: "always"
       end
     end
