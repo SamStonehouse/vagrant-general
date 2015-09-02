@@ -1,0 +1,5 @@
+---
+  nginx::config::sendfile: off
+  nginx::nginx_vhosts:
+    'localhost':
+      www_root: "%{web_root}"

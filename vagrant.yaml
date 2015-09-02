@@ -1,0 +1,12 @@
+---
+  - name: webdev-box
+    ip: 192.168.56.3
+    role: web-server
+    web-root: /var/project/build
+    sync:
+      - source: ../basics
+        target: /var/project
+    facts:
+      role: nginx
+      environment: development
+      web_root: /var/project/build
