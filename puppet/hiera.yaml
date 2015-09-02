@@ -2,8 +2,8 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: /vagrant/puppet/hieradata
+  :datadir: /var/puppet/hieradata
 :hierarchy:
-  - "roles/%{role_alt}"
-  - "roles/%{role}"
+  - "roles/%{environment}/square-{role}"
+  - "roles/square-%{role}"
   - common

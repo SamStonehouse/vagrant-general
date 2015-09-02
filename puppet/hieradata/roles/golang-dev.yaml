@@ -1,6 +1,0 @@
----
-classes:
-  - golang
-golang::workspace: "%{golang_working_dir}"
-golang::version: 1.5
-golang::download_url: https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz

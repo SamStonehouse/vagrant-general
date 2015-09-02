@@ -19,13 +19,11 @@
         config.vm.define machine["name"] do |mach|
 
           # Create an empty map to store puppet facts
-          facts = {}
+          facts = machine_config['facts']
 
-          facts['role'] = machine_config['role']
-	  facts['role_alt'] = machine_config['role-alt']
-          facts['web_root'] = machine_config['web-root']
-          facts['golang_working_dir'] = machine_config['golang-working-dir']
           puts "Facts: " + facts.inspect
+
+          machine['sync'].unshift({ 'source' => '../puppet', 'target' => '/var/puppet' })
 
           #Syncronise directories
           machine['sync'].each do |sync|
@@ -35,25 +33,25 @@
           #puts mach.vm.inspect
           #puts config.vm.inspect
 
-          #mach.vm.define :prov do |prov|
+          mach.vm.provider "virtualbox" do |v, override|
 
             # Do an initial shell provision to update apt and ensure puppet is installed
-            mach.vm.provision "shell", inline: <<-SHELL
+            override.vm.provision "shell", inline: <<-SHELL
               sudo apt-get -y update
               sudo apt-get -y install puppet
             SHELL
 
             # Do a puppet provision to install the rest of the software
-            mach.vm.provision "puppet" do |puppet|
-              puppet.module_path = "puppet/modules"
-              puppet.manifests_path = "puppet/manifests"
+            override.vm.provision "puppet" do |puppet|
+              puppet.module_path = "../puppet/modules"
+              puppet.manifests_path = "../puppet/manifests"
               puppet.manifest_file = "init.pp"
               puppet.hiera_config_path  = "puppet/hiera.yaml"
-              puppet.working_directory = "/vagrant/puppet"
+              puppet.working_directory = "/var/puppet"
               puppet.facter = facts
-              #puppet.options = "--verbose --debug"
+              puppet.options = "--verbose --debug"
             end
-         # end
+          end
 
           mach.vm.box = machine_config["box"]
 

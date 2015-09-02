@@ -1,3 +1,5 @@
+# Runtime vagrant files
 /.vagrant
 
-vagrant.yaml
+# Editor temp files
+*.swp

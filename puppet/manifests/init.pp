@@ -1,1 +1,1 @@
-hiera_include('classes')
+include common
