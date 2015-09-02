@@ -2,6 +2,9 @@
   - name: webdev-box
     ip: 192.168.56.3
     role: web-server
+    ports: 
+        - host: 8080
+          guest: 80
     web-root: /var/project/build
     sync:
       - source: ../basics

@@ -55,6 +55,8 @@
 
           # Assign a private networ
           mach.vm.network "private_network", ip: machine_config["ip"]
+	  machine['ports'].each do |port|
+            mach.vm.network "forward port", guest: port['guest'], host: port['host']
           mach.vm.provider :virtualbox do |vb|
             vb.name = machine_config["name"]
             vb.memory = machine_config["memory"]
