@@ -7,9 +7,9 @@
           guest: 80
     web-root: /var/project/build
     sync:
-      - source: ../basics
-        target: /var/project
+      - source: ../alt
+        target: /var/alt
     facts:
-      role: nginx
+      role: golang-vim
       environment: development
       web_root: /var/project/build
