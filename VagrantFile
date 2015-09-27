@@ -73,12 +73,13 @@ def sync_folder(mach, source, target)
 	syncName = "sync" + $syncCount.to_s
 	$syncCount += 1
 
-	mach.vm.provider "virtualbox" do |v, override|
-		override.vm.synced_folder source, target, disabled: true
+	# mach.vm.provider "virtualbox" do |v, override|
+	# 	override.vm.synced_folder source, target, disabled: true
 
-		v.customize ["sharedfolder", "add", :id, "--name", syncName, "--hostpath", (("//?/" + File.absolute_path(source)).gsub("/","\\"))]
+	# 	v.customize ["sharedfolder", "add", :id, "--name", syncName, "--hostpath", (("//?/" + File.absolute_path(source)).gsub("/","\\"))]
 
-		override.vm.provision :shell, inline: "mkdir -p " + target
-		override.vm.provision :shell, inline: "mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` " + syncName + " " + target, run: "always"
-	end
+	# 	override.vm.provision :shell, inline: "mkdir -p " + target
+	# 	#override.vm.provision :shell, inline: "chown -R vagrant " + target
+	# 	override.vm.provision :shell, inline: "mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` " + syncName + " " + target, run: "always"
+	# end
 end

@@ -1,0 +1,14 @@
+---
+golang::workspace: "%{golang_working_dir}"
+golang::version: 1.5
+golang::download_url: https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
+nginx::config::sendfile: off
+nginx::nginx_vhosts:
+'localhost':
+  www_root: "%{web_root}"
+git::configs:
+  user.name:
+    value: 'Sam Stonehouse'
+  user.email:
+    value: 'sgstonehouse@googlemail.com'
+nodejs::make_install: false

@@ -5,11 +5,12 @@
     ports: 
         - host: 8080
           guest: 80
-    web-root: /var/project/build
     sync:
-      - source: ../alt
-        target: /var/alt
+      - source: ../code
+        target: /var/code
+      - source: ./vim
+        target: /home/vagrant/.vim
     facts:
-      role: golang-vim
+      role: dev-machine
       environment: development
       web_root: /var/project/build
